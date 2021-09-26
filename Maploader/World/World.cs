@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -114,7 +114,14 @@ namespace Maploader.World
 
             foreach (var subChunkRaw in data.SubChunks)
             {
-                CopySubChunkToChunk(c, (sbyte)subChunkRaw.Index, subChunkRaw.Data);
+                try
+                {
+                    CopySubChunkToChunk(c, (sbyte)subChunkRaw.Index, subChunkRaw.Data);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error in CopySubChunkToChunk: " + ex.Message);
+                }
             }
 
             return c;
