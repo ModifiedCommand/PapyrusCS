@@ -196,6 +196,7 @@ namespace Maploader.Renderer.Texture
             {"minecraft:sea_pickle", true},
             {"minecraft:wither_rose", true},
             {"minecraft:grindstone", true},
+            {"minecraft:polished_blackstone_pressure_plate", true},
 
             // Caves & Cliffs Update: Part 1
             {"minecraft:lightning_rod", true},
@@ -242,13 +243,17 @@ namespace Maploader.Renderer.Texture
             {"minecraft:spore_blossom", true},
 
             // 1.19
+            {"minecraft:mangrove_propagule", true},
+            {"minecraft:mangrove_leaves", true},
             {"minecraft:mangrove_standing_sign", true},
             {"minecraft:mangrove_wall_sign", true},
             {"minecraft:mangrove_fence", true},
             {"minecraft:mangrove_fence_gate", true},
             {"minecraft:mangrove_button", true},
+            {"minecraft:mangrove_pressure_plate", true},
             {"minecraft:mangrove_door", true},
             {"minecraft:mangrove_trapdoor", true},
+            {"minecraft:mangrove_roots", true},
             {"minecraft:sculk_vein", true},
             {"minecraft:mud_brick_wall", true},
 
@@ -1267,8 +1272,7 @@ namespace Maploader.Renderer.Texture
 
                 case "lit_deepslate_redstone_ore":
                     return GetTexture("deepslate_redstone_ore", data);
-                
-                
+
                 case "glow_frame":
                     return RenderItemFrame(data, "glow_item_frame");
                 case "small_dripleaf_block":
@@ -1276,7 +1280,7 @@ namespace Maploader.Renderer.Texture
                 case "moss_carpet":
                     return GetTexture("moss_block", data);
                 case "big_dripleaf":
-                    return GetTexture("big_dripleaf_top", data);
+                    return GetTexture("big_dripleaf_top", 0, null, RotateFromDirection(data));
                 case "pointed_dripstone":
                     return RenderDripstone(data);
                 case "azalea":
@@ -1353,6 +1357,8 @@ namespace Maploader.Renderer.Texture
                     return RenderFenceGate(data, "mangrove_planks");
                 case "mangrove_button":
                     return RenderButton(data, "mangrove_planks");
+                case "mangrove_leaves":
+                    return GetTexture("mangrove_leaves_carried");
 
                 case "sculk_vein":
                     return RenderMultiFace("sculk_vein", data);
