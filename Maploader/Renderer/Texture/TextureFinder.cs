@@ -238,6 +238,15 @@ namespace Maploader.Renderer.Texture
             {"minecraft:red_candle", true},
             {"minecraft:black_candle", true},
             {"minecraft:spore_blossom", true},
+
+            // 1.19
+            {"minecraft:mangrove_standing_sign", true},
+            {"minecraft:mangrove_wall_sign", true},
+            {"minecraft:mangrove_fence", true},
+            {"minecraft:mangrove_fence_gate", true},
+            {"minecraft:mangrove_button", true},
+            {"minecraft:mangrove_door", true},
+            {"minecraft:mangrove_trapdoor", true},
         };
 
         private readonly Dictionary<string, Texture> texturesJson;
@@ -795,15 +804,23 @@ namespace Maploader.Renderer.Texture
 
                 case "stone_slab":
                 case "double_stone_slab":
+                case "stone_block_slab":
+                case "double_stone_block_slab":
                     return GetTexture("stone_slab_top", StoneSlabIndexes[1][(string)data["stone_slab_type"]]);
                 case "stone_slab2":
                 case "double_stone_slab2":
+                case "stone_block_slab2":
+                case "double_stone_block_slab2":
                     return GetTexture("stone_slab_top_2", StoneSlabIndexes[2][(string)data["stone_slab_type_2"]]);
                 case "stone_slab3":
                 case "double_stone_slab3":
+                case "stone_block_slab3":
+                case "double_stone_block_slab3":
                     return GetTexture("stone_slab_top_3", StoneSlabIndexes[3][(string)data["stone_slab_type_3"]]);
                 case "stone_slab4":
                 case "double_stone_slab4":
+                case "stone_block_slab4":
+                case "double_stone_block_slab4":
                     return GetTexture("stone_slab_top_4", StoneSlabIndexes[4][(string)data["stone_slab_type_4"]]);
 
                 case "bone_block":
@@ -1294,6 +1311,38 @@ namespace Maploader.Renderer.Texture
                 case "red_candle":
                 case "black_candle":
                     return RenderCandle(name, data);
+
+                // 1.19
+                case "mangrove_wood":
+                    return RenderPillar("mangrove_log_top", data);
+                case "mangrove_log":
+                    return RenderPillar("mangrove_log_top", "mangrove_log_side", data);
+                case "stripped_mangrove_wood":
+                    return RenderPillar("stripped_mangrove_log_top", data);
+                case "stripped_mangrove_log":
+                    return RenderPillar("stripped_mangrove_log_top", "stripped_mangrove_log_side", data);
+                case "mangrove_roots":
+                    return GetTexture("mangrove_roots_top");
+                case "muddy_mangrove_roots":
+                    return GetTexture("muddy_mangrove_roots_top");
+                case "mangrove_slab":
+                case "mangrove_double_slab":
+                case "mangrove_stairs":
+                    return GetTexture("mangrove_planks");
+                case "mangrove_pressure_plate":
+                    return RenderPressurePlate("mangrove_planks", data);
+                case "mangrove_door":
+                    return GetTexture("mangrove_door_top");
+                case "mangrove_standing_sign":
+                    return RenderSign("mangrove_planks", data);
+                case "mangrove_wall_sign":
+                    return RenderWallSign("mangrove_planks", data);
+                case "mangrove_fence":
+                    return RenderFence("mangrove_planks", data);
+                case "mangrove_fence_gate":
+                    return RenderFenceGate(data, "mangrove_planks");
+                case "mangrove_button":
+                    return RenderButton(data, "mangrove_planks");
             }
 
             return null;
