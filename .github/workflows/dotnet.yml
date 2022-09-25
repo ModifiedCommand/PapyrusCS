@@ -1,0 +1,50 @@
+name: .NET Build
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+           access_token: ${{ github.token }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Calculate build number
+        id: build-number
+        run: |
+          BUILD_NUMBER=$(($GITHUB_RUN_NUMBER)) #to stay above jenkins
+          echo "Build number: $BUILD_NUMBER"
+          echo ::set-output name=BUILD_NUMBER::$BUILD_NUMBER
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+         dotnet-version: 3.1.x
+         
+      - name: Build
+        run: dotnet publish PapyrusCs -c Release --self-contained --runtime win-x64
+        
+      - uses: vimtor/action-zip@v1
+        with:
+          files: PapyrusCs/bin/Release/netcoreapp3.1/win-x64/publish/
+          dest: papyruscs-dotnetcore-0.6.${{ steps.build-number.outputs.BUILD_NUMBER }}-win64.zip
+      - name: Upload .zip as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: papyruscs-dotnetcore-0.6.${{ steps.build-number.outputs.BUILD_NUMBER }}-win64.zip
+          path: papyruscs-dotnetcore-0.6.${{ steps.build-number.outputs.BUILD_NUMBER }}-win64.zip
+          if-no-files-found: error
+          
+      - name: Puts the release on GitHub
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "papyruscs-dotnetcore-0.6.${{ steps.build-number.outputs.BUILD_NUMBER }}-win64.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: 0.6.${{ steps.build-number.outputs.BUILD_NUMBER }}
+          name: PapyrusCs - 0.6.${{ steps.build-number.outputs.BUILD_NUMBER }}
+          prerelease: true
+          
