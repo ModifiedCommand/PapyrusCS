@@ -166,12 +166,11 @@ namespace MapLoader.NUnitTests
             {
                 var dut = new Maploader.World.World();
                 dut.Open(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "benchmark", "world", "db"));
-                int chunkRadius = 1;
-                int centerOffsetX = 1; //65;
-                int centerOffsetZ = 1; //65;
+                int XMin = -1, XMax = 3;
+                int ZMin = -1, ZMax = 4;
                 string filename = "benchmark.png";
 
-                RenderMap(chunkRadius, dut, centerOffsetX, centerOffsetZ, filename);
+                RenderMap(dut, filename, XMin, XMax, ZMin, ZMax);
             }
 
             private static void RenderMap(int chunkRadius, Maploader.World.World dut, int centerOffsetX,
@@ -180,6 +179,12 @@ namespace MapLoader.NUnitTests
                 int XMin = centerOffsetX - chunkRadius, XMax = centerOffsetX + chunkRadius;
                 int ZMin = centerOffsetZ - chunkRadius, ZMax = centerOffsetZ + chunkRadius;
 
+                RenderMap(dut, filename, XMin, XMax, ZMin, ZMax);
+            }
+
+            private static void RenderMap(Maploader.World.World dut, string filename,
+            int XMin, int XMax, int ZMin, int ZMax)
+            {
                 var json = File.ReadAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"textures",
                     "terrain_texture.json"));
                 var ts = new TerrainTextureJsonParser(json, "");
@@ -189,7 +194,7 @@ namespace MapLoader.NUnitTests
                     Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "textures"), g);
                 finder.Debug = false;
 
-                var b = g.CreateEmptyImage(16 * 16 * (2 * chunkRadius + 1), 16 * 16 * (2 * chunkRadius + 1));
+                var b = g.CreateEmptyImage(16 * 16 * (XMax - XMin + 1), 16 * 16 * (ZMax - ZMin + 1));
 
                 var render = new ChunkRenderer<Bitmap>(finder, g, new RenderSettings() { YMax = 40 });
 
@@ -205,9 +210,9 @@ namespace MapLoader.NUnitTests
                     var c = dut.GetChunk(chunkData.X, chunkData.Z, chunkData);
                     if (c != null)
                     {
-                        int dx = chunkData.X - centerOffsetX;
-                        int dz = chunkData.Z - centerOffsetZ;
-                        render.RenderChunk(b, c, (chunkRadius + dx) * 256, (chunkRadius + dz) * 256);
+                        int dx = chunkData.X - XMin;
+                        int dz = chunkData.Z - ZMin;
+                        render.RenderChunk(b, c, dx * 256, dz * 256);
                     }
                 }
 
