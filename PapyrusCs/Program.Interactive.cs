@@ -17,6 +17,7 @@ namespace PapyrusCs
             }
             else
             {
+                Console.Title = "PapyrusCS";
                 Console.WriteLine("World not specified.  Looking for worlds in the default Bedrock Edition worlds folder.");
 
                 try
