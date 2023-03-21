@@ -1,5 +1,5 @@
 Chat: [![Discord](https://img.shields.io/discord/569841820092203011.svg?logo=discord&logoColor=white)](https://discord.gg/J2sBaXa) <br>
-Build: [![Publish](https://github.com/ModifiedCommand/PapyrusCS/actions/workflows/publish.yml/badge.svg)](https://github.com/ModifiedCommand/PapyrusCS/actions/workflows/publish.yml) <br>
+Build: [![.NET Build](https://github.com/ModifiedCommand/PapyrusCS/actions/workflows/dotnet.yml/badge.svg)](https://github.com/ModifiedCommand/PapyrusCS/actions/workflows/dotnet.yml) <br>
 
 # Papyrus
 
