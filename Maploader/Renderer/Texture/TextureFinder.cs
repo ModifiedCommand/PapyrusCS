@@ -914,6 +914,7 @@ namespace Maploader.Renderer.Texture
                     return RenderPillar("stripped_acacia_log_top", "stripped_acacia_log_side", data);
 
                 case "log":
+                case "oak_log":
                 {
                     data["val"] = WoodIndexes[(string)data.GetValueOrDefault("old_log_type", "oak")];
                     return RenderPillar("log_top", "log_side", data);
@@ -1470,6 +1471,25 @@ namespace Maploader.Renderer.Texture
                     return new TextureStack();  // transparent
                 case "structure_block":
                     return GetTexture("structure_block", data);
+
+                case "white_wool":
+                case "gray_wool":
+                case "black_wool":
+                case "brown_wool":
+                case "red_wool":
+                case "orange_wool":
+                case "yellow_wool":
+                case "lime_wool":
+                case "green_wool":
+                case "cyan_wool":
+                case "light_blue_wool":
+                case "blue_wool":
+                case "purple_wool":
+                case "magenta_wool":
+                case "pink_wool":
+                    return "textures/blocks/wool_colored_" + name.Replace("_wool", "");
+                case "light_gray_wool":
+                    return "textures/blocks/wool_colored_silver";
             }
 
             return null;
