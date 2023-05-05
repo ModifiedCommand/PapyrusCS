@@ -36,17 +36,16 @@ namespace Maploader.Renderer
         {
             var xzColumns = c.Blocks.GroupBy(x => x.Value.XZ);
             var blocksOrderedByXZ = xzColumns.OrderBy(x => x.Key.GetLeByte(0)).ThenBy(x => x.Key.GetLeByte(1));
-            var brightnessOffset = Math.Min(renderSettings.BrillouinOffset, renderSettings.YMax);
-            if (brightnessOffset < 0)
-                brightnessOffset = renderSettings.BrillouinOffset;
-
+            var brightnessOffset = renderSettings.BrillouinOffset;
+            if (renderSettings.YMax.HasValue)
+                brightnessOffset = Math.Min(brightnessOffset, renderSettings.YMax.Value);
 
             foreach (var blocks in blocksOrderedByXZ)
             {
                 var blocksToRender = new Stack<BlockCoord>();
 
                 List<KeyValuePair<uint, BlockCoord>> blocksFromSkyToBedrock = blocks.Where(x => x.Value.Block.Id != "minecraft:air").OrderByDescending(x => x.Value.Y).ToList();
-                if (renderSettings.YMax > 0)
+                if (renderSettings.YMax.HasValue)
                     blocksFromSkyToBedrock = blocksFromSkyToBedrock.Where(x => x.Value.Y <= renderSettings.YMax).ToList();
 
                 if (renderSettings.TrimCeiling)
