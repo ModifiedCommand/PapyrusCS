@@ -59,8 +59,8 @@ namespace PapyrusCs
         [Option("limitz", Required = false, HelpText = "Limits the chunk rendering in the z dimension (inclusive). Provide two values with comma separated, eg: -10,10")]
         public string LimitZ { get; set; }
 
-        [Option('y', "limity", Required = false, HelpText = "Limits the chunk rendering in the y dimension (inclusive). For y provide just one positive value, eg: 10. -1 means: all", Default = -1)]
-        public int LimitY { get; set; }
+        [Option('y', "limity", Required = false, HelpText = "Limits the chunk rendering in the y dimension (inclusive). For y provide just one positive value, eg: 10", Default = null)]
+        public int? LimitY { get; set; }
 
         [Option("threads", Required = false, HelpText = "Set maximum of used threads", Default = 16)]
         public int MaxNumberOfThreads { get; set; }

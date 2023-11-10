@@ -168,7 +168,7 @@ namespace PapyrusCs
                 {
                     // Nether
                     options.TrimCeiling = true;
-                    if (options.LimitY == -1)
+                    if (!options.LimitY.HasValue)
                     {
                         options.LimitY = 120;
                     }
@@ -199,9 +199,9 @@ namespace PapyrusCs
                 Console.WriteLine($"  Z: {zmin} to {zmax}");
                 Console.WriteLine();
 
-                if (options.LimitY > 0)
+                if (options.LimitY.HasValue)
                 {
-                    Console.WriteLine($"Limiting Y to {options.LimitY}");
+                    Console.WriteLine($"Limiting Y to {options.LimitY.Value}");
                 }
 
                 const int chunkSize = 256;
